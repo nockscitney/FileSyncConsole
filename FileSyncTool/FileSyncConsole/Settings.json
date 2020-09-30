@@ -1,0 +1,18 @@
+[
+  {
+    "SettingName": "SourceDir",
+    "SettingValue": ""
+  },
+  {
+    "SettingName": "DestinationDir",
+    "SettingValue": ""
+  },
+  {
+    "SettingName": "MaxDestinationSize",
+    "SettingValue": "2147483648" // 2GB
+  },
+  {
+    "SettingName": "LogFileName",
+    "SettingValue": "LogFile.txt"
+  }
+]
