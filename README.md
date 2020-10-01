@@ -15,5 +15,5 @@ In order for the application to function, there are some settings which need to 
 
 - SourceDir: Folder path to folder where the source files reside
 - DestinationDir: Folder path to the folder where the files need to be synced
-- MaxDestinationSize: Maximum amount of data we want to send to the destination folder
+- MaxDestinationSize: Maximum amount of data we want to send to the destination folder (currently in bytes)
 - LogFileName: Name of the log file which will record all the actions during the sync operation
