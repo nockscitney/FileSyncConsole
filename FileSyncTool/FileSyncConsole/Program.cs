@@ -1,6 +1,7 @@
 ﻿//  System
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading;
 //  Logic
@@ -31,11 +32,9 @@ namespace NickScotney.FileSync.MovieSyncConsole
 
             //  Set program variables here
             var destinationDir = LoadSettingValue<string>(settingsList, "DestinationDir");
+            var fileSizeUnit = LoadSettingValue<string>(settingsList, "FileSizeUnit");
             var maxDirSize = LoadSettingValue<long>(settingsList, "MaxDestinationSize");
             var sourceDir = LoadSettingValue<string>(settingsList, "SourceDir");
-            //  Get the current folder sizes of Source and Destination
-            var destinationSize = FileHelper.CalculateFolderSize(destinationDir);
-            var sourceSize = FileHelper.CalculateFolderSize(sourceDir);
 
             //  Set the log file name
             FileHelper.LogFileName = LoadSettingValue<string>(settingsList, "LogFileName");
@@ -44,19 +43,30 @@ namespace NickScotney.FileSync.MovieSyncConsole
             FileHelper.WriteToLogFile(String.Empty, true);
 
             //  Output Debug Values to Console
-            LogToConsole($"Max Dir Size: {FileHelper.ConvertFromByte(maxDirSize, "MB")} MB");
+            LogToConsole($"Max Dir Size: {maxDirSize} {fileSizeUnit}");
             LogToConsole(String.Empty);
             LogToConsole($"Destination Dir: {destinationDir}");
-            LogToConsole($"Destination Dir Size: {FileHelper.ConvertFromByte(destinationSize, "MB")} MB");
             LogToConsole(String.Empty);
             LogToConsole($"Source Dir: {sourceDir}");
-            LogToConsole($"Source Dir Size: {FileHelper.ConvertFromByte(sourceSize, "MB")} MB");
 
             Thread.Sleep(5000);
 
             LogToConsole(String.Empty);
             LogToConsole("Begin File Sync Operation");
             LogToConsole(String.Empty);
+
+            switch (fileSizeUnit.ToLower())
+            {
+                case "gb":
+                    maxDirSize = ((maxDirSize * 1024) * 1024) * 1024;
+                    break;
+                case "mb":
+                    maxDirSize = (maxDirSize * 1024) * 1024;
+                    break;
+                case "kb":
+                    maxDirSize = maxDirSize * 1024;
+                    break;
+            }
 
             TransferController transferController = new TransferController(maxDirSize, destinationDir, sourceDir);
             transferController.SyncFolders();
@@ -72,8 +82,10 @@ namespace NickScotney.FileSync.MovieSyncConsole
         { 
             //  Finish up Here
             Console.WriteLine(String.Empty);
-            Console.WriteLine("Press any key . . . ");
-            Console.ReadKey();            
+            Console.WriteLine("Finishing Up . . . . . . . ");
+            Thread.Sleep(5000);
+            //Console.WriteLine("Press any key . . . ");
+            //Console.ReadKey();            
         }
 
         static T LoadSettingValue<T>(List<Setting> settingList, string settingName)

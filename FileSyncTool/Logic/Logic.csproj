@@ -47,6 +47,7 @@
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Models\Setting.cs" />
+    <Compile Include="Models\SourceObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

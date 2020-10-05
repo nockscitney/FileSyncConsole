@@ -9,7 +9,11 @@
   },
   {
     "SettingName": "MaxDestinationSize",
-    "SettingValue": "2147483648" // 2GB
+    "SettingValue": "1"
+  },
+  {
+    "SettingName": "FileSizeUnit",
+    "SettingValue": "GB"
   },
   {
     "SettingName": "LogFileName",
